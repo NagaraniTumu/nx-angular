@@ -40,7 +40,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/tuskdesk",
             "index": "apps/tuskdesk/src/index.html",
@@ -52,7 +54,9 @@
               "apps/tuskdesk/src/favicon.ico",
               "apps/tuskdesk/src/assets"
             ],
-            "styles": ["apps/tuskdesk/src/styles.scss"],
+            "styles": [
+              "apps/tuskdesk/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -90,6 +94,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "tuskdesk:build",
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "tuskdesk:build:production"
@@ -117,7 +125,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/tuskdesk"],
+          "outputs": [
+            "coverage/apps/tuskdesk"
+          ],
           "options": {
             "jestConfig": "apps/tuskdesk/jest.config.js",
             "passWithNoTests": true
@@ -146,7 +156,248 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/tuskdesk-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/tuskdesk-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "tuskdesk-admin": {
+      "projectType": "application",
+      "root": "apps/tuskdesk-admin",
+      "sourceRoot": "apps/tuskdesk-admin/src",
+      "prefix": "first-nx-app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/tuskdesk-admin",
+            "index": "apps/tuskdesk-admin/src/index.html",
+            "main": "apps/tuskdesk-admin/src/main.ts",
+            "polyfills": "apps/tuskdesk-admin/src/polyfills.ts",
+            "tsConfig": "apps/tuskdesk-admin/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/tuskdesk-admin/src/favicon.ico",
+              "apps/tuskdesk-admin/src/assets"
+            ],
+            "styles": [
+              "apps/tuskdesk-admin/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/tuskdesk-admin/src/environments/environment.ts",
+                  "with": "apps/tuskdesk-admin/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "tuskdesk-admin:build:production"
+            },
+            "development": {
+              "browserTarget": "tuskdesk-admin:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "tuskdesk-admin:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/tuskdesk-admin/src/**/*.ts",
+              "apps/tuskdesk-admin/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/tuskdesk-admin"
+          ],
+          "options": {
+            "jestConfig": "apps/tuskdesk-admin/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "tuskdesk-admin-e2e": {
+      "root": "apps/tuskdesk-admin-e2e",
+      "sourceRoot": "apps/tuskdesk-admin-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/tuskdesk-admin-e2e/cypress.json",
+            "tsConfig": "apps/tuskdesk-admin-e2e/tsconfig.e2e.json",
+            "devServerTarget": "tuskdesk-admin:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "tuskdesk-admin:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/tuskdesk-admin-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "ui-shell": {
+      "projectType": "library",
+      "root": "libs/ui-shell",
+      "sourceRoot": "libs/ui-shell/src",
+      "prefix": "first-nx-app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/ui-shell"
+          ],
+          "options": {
+            "jestConfig": "libs/ui-shell/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui-shell/src/**/*.ts",
+              "libs/ui-shell/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "data": {
+      "projectType": "library",
+      "root": "libs/data",
+      "sourceRoot": "libs/data/src",
+      "prefix": "first-nx-app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/data"
+          ],
+          "options": {
+            "jestConfig": "libs/data/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/data/src/**/*.ts",
+              "libs/data/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": [
+              "apps/api/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/api/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/api"
+          ],
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

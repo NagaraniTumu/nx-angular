@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@first-nx-app/ui-shell": ["libs/ui-shell/src/index.ts"],
+      "@first-nx-app/data": ["libs/data/src"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

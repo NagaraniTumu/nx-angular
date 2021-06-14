@@ -25,6 +25,22 @@
     "tuskdesk-e2e": {
       "tags": [],
       "implicitDependencies": ["tuskdesk"]
+    },
+    "tuskdesk-admin": {
+      "tags": []
+    },
+    "tuskdesk-admin-e2e": {
+      "tags": [],
+      "implicitDependencies": ["tuskdesk-admin"]
+    },
+    "ui-shell": {
+      "tags": []
+    },
+    "data": {
+      "tags": []
+    },
+    "api": {
+      "tags": []
     }
   }
 }
